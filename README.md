@@ -20,12 +20,17 @@
 
 ![](docs/images/poseidon-rs.gif)
 
-<details open="open">
+<details>
 <summary>Table of Contents</summary>
 
-- [Report a Bug](#report-a-bug)
-- [Request a Feature](#request-a-feature)
 - [About](#about)
+- [Warning](#warning)
+- [Reference](#reference)
+- [Implementation design](#implementation-design)
+  - [Poseidon hash function overview](#poseidon-hash-function-overview)
+  - [Poseidon Permutation](#poseidon-permutation)
+  - [Round Function](#round-function)
+  - [Constants Selection](#constants-selection)  
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Build](#build)
@@ -44,7 +49,92 @@
 ---
 ## About
 
-> Poseidon implementation in Rust.
+>**Poseidon_rs** is an implementation in Rust of the Poseidon family of hash function over finite fields.
+
+It is being developed in the context of the [EIP 5988](https://eips.ethereum.org/EIPS/eip-5988) which proposes to introduce a new precompiled contract which implements the Poseidon hash function, which is a set of permutations over a prime field, in order to provide an improved interoperability between the EVM and ZK / Validity rollups.
+
+## Warning
+
+It is a work in progress, do not use in production.
+
+## Reference
+
+|:-------------|:------------------------|
+|EIP 5988|https://eips.ethereum.org/EIPS/eip-5988|
+|EIP 5988 Discussion|https://ethereum-magicians.org/t/eip-5988-add-poseidon-hash-function-precompile/11772|
+|Poseidon paper|https://eips.ethereum.org/assets/eip-5988/papers/poseidon_paper.pdf|
+|Reference implementation|https://extgit.iaik.tugraz.at/krypto/hadeshash/-/tree/master/code|
+
+## Implementation Design
+
+### Poseidon Hash Function Overview
+
+This section describes how a hash of a message M is computed using Poseidon.
+
+Poseidon uses the sponge/squeeze technique to hash a message with an arbitrary size into a fixed-size output (see Fig1).
+
+The sponge has a state S = (S_1, …, S_t) made of t field elements. The state is initialized to zeros. It can absorb r field elements at a time, where r is the input rate (r < t) or it can squeeze elements out.
+
+To absorb a message of r elements, the sponge adds it to its state’s r first components and applies the poseidon-permutation, leaving the sponge in a new state (see Fig2). More elements can be absorbed at will.
+To squeeze elements out, the sponge returns all or a part of its state and applies the Poseidon-permutation to its state.
+
+<div align="center">
+
+<img src="docs/images/rm-poseidon-fig-1.png">
+
+**Figure 1. Global overview of a Poseidon hash**
+
+<img src="docs/images/rm-poseidon-fig-2.png">
+
+**Figure 2. Composition of a state**
+
+</div>
+
+### Poseidon Permutation 
+
+A Poseidon permutation consists of two round functions, full and partial, both applied enough times (RF times and RP times respectively) to make the permutation behave like a random one. (c.f. Fig3.)
+
+<div align="center">
+
+<img src="docs/images/rm-poseidon-fig-3.png">
+
+</div>
+
+**Figure 3. Poseidon permutation**
+
+### Round Function
+
+A round function consists of three transformation that modify the state:
+- ark: the round constants are added to the state.
+- S-box: a substitution box (S-box(x)=x^α) is applied to counter algebraic attacks. α is chosen such that gcd⁡(α,p-1)=1.
+- Mix: the state is mixed through a multiplication by a t×t [MDS matrix](https://en.wikipedia.org/wiki/MDS_matrix). This last transformation makes the hash function resistant against differential and linear cryptanalysis.
+
+In a full round function S-boxes are applied to the full state while a partial round function contains a single S-box. Detailed overviews of both functions are given in Fig4. and Fig5.
+
+<div align="center">
+
+<img src="docs/images/rm-poseidon-fig-4.png">
+
+**Figure 4. Full round overiew**
+
+<img src="docs/images/rm-poseidon-fig-5.png">
+
+**Figure 5. Partial round overview**
+
+</div>
+
+### Constants Selection
+
+Security of the hash function depends on the selection of good round constants and MDS matrix. In turn, these constants depend on the finite field, the number of rounds, the rate and the capacity. This makes the Poseidon hash function family flexible, but one has to manage the parameters in some way.
+
+Several propositions were made to overcome this difficulty in the context of EIP-5988, [among them those proposed by vbuterin](https://ethereum-magicians.org/t/eip-5988-add-poseidon-hash-function-precompile/11772) :
+
+> 1. Add an extra global execution context variable which stores which state sizes and round counts have been used before, and the MDS and RC values for those state sizes using some standard algorithm. When using a new (state size, round count), generate new values and charge extra gas for this.
+> 2. Generate parameters in real time.
+> 3. Pass parameters in as inputs.
+
+As a first step, we have chosen the first approach. Different set of parameters including MDS matrix and the round constants are hard coded in the library, but one could extend it with other sets of parameters.
+
 
 ## Getting Started
 
@@ -54,10 +144,27 @@
 
 ### Build
 
-> **[TODO]**
+To build poseidon from source:
+```bash
+cargo build --release
+```
+The build generates 2 librairies located in `target/release`:
+  1. libposeidon.rlib is the rust library file
+  1. libposeidon.so is a shared-library wrapping the rust library with a C-interface
+
 ### Test
 
-> **[TODO]**
+To test the rust library:
+```bash
+cargo test
+```
+Tests for the C-interface are also available through golang in the tests/go_tests folder.
+From that folder, one can run tests (making sure the shared-library is findable by the linker),
+for example:
+```bash
+LD_LIBRARY_PATH=$(pwd)/../../target/release && go test -v
+```
+Note that golang must be installed on your system to run the go_tests.
 
 ## Roadmap
 
