@@ -48,9 +48,9 @@
 
 ## About
 
->**Poseidon_rs** is an implementation in Rust of the Poseidon family of hash function over finite fields.
+>**Poseidon_rs** is an implementation in Rust of the Poseidon family of hash function.
 
-It is being developed in the context of the [EIP 5988](https://eips.ethereum.org/EIPS/eip-5988) which proposes to introduce a new precompiled contract which implements the Poseidon hash function, which is a set of permutations over a prime field, in order to provide an improved interoperability between the EVM and ZK / Validity rollups.
+It is being developed in the context of the [EIP 5988](https://eips.ethereum.org/EIPS/eip-5988) which proposes to introduce a new precompiled contract which implements the Poseidon hash function, which is a set of permutations over a prime field, in order to provide an improved interoperability between the EVM and ZK & Validity rollups.
 
 ## Warning
 
@@ -78,8 +78,7 @@ To absorb a message of $r$ elements, the sponge adds it to its state’s $r$ fir
 To squeeze elements out, the sponge returns all or a part of its state and applies the Poseidon-permutation to its state.
 
 <div align="center">
-  <br>
-
+ 
   #### **Figure 1. Global overview of a Poseidon hash**
   
   <img src="docs/images/rm-poseidon-fig-1.svg">
@@ -92,7 +91,7 @@ To squeeze elements out, the sponge returns all or a part of its state and appli
 
 ### Poseidon Permutation 
 
-A Poseidon permutation consists of two round functions, full and partial, both applied enough times, $RF$ times and $RP$ times respectively, to make the permutation behave like a random one (see [Fig3](#figure-3-poseidon-permutation)).
+A Poseidon permutation consists of two round functions, full and partial, both applied enough times - $RF$ times and $RP$ times respectively - to make the permutation behave like a random one (see [Fig3](#figure-3-poseidon-permutation)).
 
 <div align="center">
 
@@ -105,7 +104,7 @@ A Poseidon permutation consists of two round functions, full and partial, both a
 ### Round Function
 
 A round function consists of three transformation that modify the state:
-- ark: the round constants are added to the state.
+- Ark: the round constants are added to the state.
 - S-box: a substitution box $(S-box(x)=x^α)$ is applied to counter algebraic attacks. α is chosen such that $gcd⁡(α,p-1)=1$.
 - Mix: the state is mixed through a multiplication by a $t×t$ [MDS matrix](https://en.wikipedia.org/wiki/MDS_matrix). This last transformation makes the hash function resistant against differential and linear cryptanalysis.
 
