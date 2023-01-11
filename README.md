@@ -46,7 +46,6 @@
 
 </details>
 
----
 ## About
 
 >**Poseidon_rs** is an implementation in Rust of the Poseidon family of hash function over finite fields.
@@ -82,20 +81,18 @@ To squeeze elements out, the sponge returns all or a part of its state and appli
   <br>
 
   #### **Figure 1. Global overview of a Poseidon hash**
-  <br>
+  
   <img src="docs/images/rm-poseidon-fig-1.svg">
-  <br>
-  <br>
 
   #### **Figure 2. Composition of a state**
-  <br>
+  
   <img src="docs/images/rm-poseidon-fig-2.svg">
 
 </div>
 
 ### Poseidon Permutation 
 
-A Poseidon permutation consists of two round functions, full and partial, both applied enough times, $RF$ times and $RP$ times respectively, to make the permutation behave like a random one. (see [Fig3](#figure-3-poseidon-permutation)
+A Poseidon permutation consists of two round functions, full and partial, both applied enough times, $RF$ times and $RP$ times respectively, to make the permutation behave like a random one (see [Fig3](#figure-3-poseidon-permutation)).
 
 <div align="center">
 
