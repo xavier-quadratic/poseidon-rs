@@ -50,7 +50,7 @@
 
 >**Poseidon_rs** is an implementation in Rust of the Poseidon family of hash function.
 
-It is being developed in the context of the [EIP 5988](https://eips.ethereum.org/EIPS/eip-5988) which proposes to introduce a new precompiled contract which implements the Poseidon hash function, which is a set of permutations over a prime field, in order to provide an improved interoperability between the EVM and ZK & Validity rollups.
+It is being developed in the context of the [EIP 5988](https://eips.ethereum.org/EIPS/eip-5988) which proposes to introduce a new precompiled contract implementing Poseidon hash function over finite fields in order to provide an improved interoperability between the EVM and ZK & Validity rollups.  
 
 ## Warning
 
@@ -73,20 +73,20 @@ Poseidon uses the sponge/squeeze technique to hash a message with an arbitrary s
 
 The sponge has a state $S = (S_{1}, …, S_{t})$ made of $t$ field elements. The state is initialized to zeros. It can absorb $r$ field elements at a time, where $r$ is the input rate $(r < t)$ or it can squeeze elements out.
 
+<div align="center">
+ 
+  #### **Figure 1. Global overview of a Poseidon hash**
+  <img src="docs/images/rm-poseidon-fig-1.svg">
+</div>
+
 To absorb a message of $r$ elements, the sponge adds it to its state’s $r$ first components and applies the poseidon-permutation, leaving the sponge in a new state (see [Fig2](#figure-2-composition-of-a-state)). More elements can be absorbed at will.
 
 To squeeze elements out, the sponge returns all or a part of its state and applies the Poseidon-permutation to its state.
 
 <div align="center">
- 
-  #### **Figure 1. Global overview of a Poseidon hash**
-  
-  <img src="docs/images/rm-poseidon-fig-1.svg">
 
   #### **Figure 2. Composition of a state**
-  
   <img src="docs/images/rm-poseidon-fig-2.svg">
-
 </div>
 
 ### Poseidon Permutation 
@@ -96,9 +96,7 @@ A Poseidon permutation consists of two round functions, full and partial, both a
 <div align="center">
 
   #### **Figure 3. Poseidon permutation**
-
   <img src="docs/images/rm-poseidon-fig-3.svg">
-
 </div>
 
 ### Round Function
@@ -113,11 +111,9 @@ In a full round function S-boxes are applied to the full state while a partial r
 <div align="center">
 
   #### **Figure 4. Full round overiew**
-
   <img src="docs/images/rm-poseidon-fig-4.svg">
 
   #### **Figure 5. Partial round overview**
-
   <img src="docs/images/rm-poseidon-fig-5.svg">
 
 </div>
