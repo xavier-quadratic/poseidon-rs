@@ -74,7 +74,7 @@ Poseidon uses the sponge/squeeze technique to hash a message with an arbitrary s
 
 The sponge has a state $S = (S_{1}, …, S_{t})$ made of $t$ field elements. The state is initialized to zeros. It can absorb $r$ field elements at a time, where $r$ is the input rate $(r < t)$ or it can squeeze elements out.
 
-To absorb a message of $r$ elements, the sponge adds it to its state’s $r$ first components and applies the poseidon-permutation, leaving the sponge in a new state [Fig2](#figure-2-composition-of-a-state). More elements can be absorbed at will.
+To absorb a message of $r$ elements, the sponge adds it to its state’s $r$ first components and applies the poseidon-permutation, leaving the sponge in a new state (see [Fig2](#figure-2-composition-of-a-state)). More elements can be absorbed at will.
 
 To squeeze elements out, the sponge returns all or a part of its state and applies the Poseidon-permutation to its state.
 
@@ -95,15 +95,15 @@ To squeeze elements out, the sponge returns all or a part of its state and appli
 
 ### Poseidon Permutation 
 
-A Poseidon permutation consists of two round functions, full and partial, both applied enough times, $RF$ times and $RP$ times respectively, to make the permutation behave like a random one. (c.f. Fig3.)
+A Poseidon permutation consists of two round functions, full and partial, both applied enough times, $RF$ times and $RP$ times respectively, to make the permutation behave like a random one. (see [Fig3](#figure-3-poseidon-permutation)
 
 <div align="center">
 
-<img src="docs/images/rm-poseidon-fig-3.svg">
+  #### **Figure 3. Poseidon permutation**
+
+  <img src="docs/images/rm-poseidon-fig-3.svg">
 
 </div>
-
-**Figure 3. Poseidon permutation**
 
 ### Round Function
 
@@ -112,17 +112,17 @@ A round function consists of three transformation that modify the state:
 - S-box: a substitution box $(S-box(x)=x^α)$ is applied to counter algebraic attacks. α is chosen such that $gcd⁡(α,p-1)=1$.
 - Mix: the state is mixed through a multiplication by a $t×t$ [MDS matrix](https://en.wikipedia.org/wiki/MDS_matrix). This last transformation makes the hash function resistant against differential and linear cryptanalysis.
 
-In a full round function S-boxes are applied to the full state while a partial round function contains a single S-box. Detailed overviews of both functions are given in Fig4. and Fig5.
+In a full round function S-boxes are applied to the full state while a partial round function contains a single S-box. Detailed overviews of both functions are given in [Fig4](#figure-5-partial-round-overview) and [Fig5](#figure-5-partial-round-overview).
 
 <div align="center">
 
-<img src="docs/images/rm-poseidon-fig-4.svg">
+  #### **Figure 4. Full round overiew**
 
-**Figure 4. Full round overiew**
+  <img src="docs/images/rm-poseidon-fig-4.svg">
 
-<img src="docs/images/rm-poseidon-fig-5.svg">
+  #### **Figure 5. Partial round overview**
 
-**Figure 5. Partial round overview**
+  <img src="docs/images/rm-poseidon-fig-5.svg">
 
 </div>
 
