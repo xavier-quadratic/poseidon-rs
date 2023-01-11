@@ -26,11 +26,12 @@
 - [About](#about)
 - [Warning](#warning)
 - [Reference](#reference)
-- [Implementation design](#implementation-design)
-  - [Poseidon hash function overview](#poseidon-hash-function-overview)
+- [Implementation Design](#implementation-design)
+  - [Poseidon Hash Function Overview](#poseidon-hash-function-overview)
   - [Poseidon Permutation](#poseidon-permutation)
   - [Round Function](#round-function)
   - [Constants Selection](#constants-selection)  
+  - [Parameters](#parameters)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Build](#build)
@@ -170,7 +171,7 @@ cargo test
 Tests for the C-interface are also available through golang in the tests/go_tests folder.
 From that folder, one can run tests (making sure the shared-library is findable by the linker),
 for example:
-```bash
+```bashgit 
 LD_LIBRARY_PATH=$(pwd)/../../target/release:$LD_LIBRARY_PATH go test -v 
 ```
 Note that golang must be installed on your system to run the go_tests.
@@ -237,4 +238,4 @@ See [LICENSE](LICENSE) for more information.
 
 ## Acknowledgements
 
-This implementation was inspired by earlier rust implementations. We would like to thank [arnaudcube](https://github.com/arnaucube) and [neptune](https://github.com/filecoin-project/neptune)’s contributors. 
+This implementation is inspired by earlier rust implementations. We would like to thank [arnaudcube](https://github.com/arnaucube) and [neptune](https://github.com/filecoin-project/neptune)’s contributors. 
