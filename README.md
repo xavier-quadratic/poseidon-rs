@@ -106,7 +106,7 @@ A Poseidon permutation behaves like a random permutation. To achieve this, it ap
 
 A round function consists of 3 transformations that modify the state:
 - Ark: the round constants are added to the state.
-- S-box: a substitution box ($Sbox(x)=x^α$) is applied with α chosen such that $gcd⁡(α,p-1)=1$.
+- S-box: a substitution, box $Sbox(x)=x^α$, is applied with α chosen such that $gcd⁡(α,p-1)=1$.
 - Mix: the state is mixed through a multiplication by a $t×t$ [MDS matrix](https://en.wikipedia.org/wiki/MDS_matrix).
 
 In a full round function S-boxes are applied to the full state while a partial round function contains a single S-box. Detailed overviews of both functions are given in [Fig4](#figure-5-partial-round-overview) and [Fig5](#figure-5-partial-round-overview).
