@@ -60,7 +60,7 @@ It is a work in progress, do not use in production.
 ## Reference
 
 - EIP 5988: https://eips.ethereum.org/EIPS/eip-5988
-- EIP 5988 Discussion: https://ethereum-magicians.org/t/eip-5988-add-poseidon-hash-function-precompile/11772
+- EIP 5988 discussion: https://ethereum-magicians.org/t/eip-5988-add-poseidon-hash-function-precompile/11772
 - Poseidon paper: https://eips.ethereum.org/assets/eip-5988/papers/poseidon_paper.pdf
 - Reference implementation: https://extgit.iaik.tugraz.at/krypto/hadeshash/-/tree/master/code
 
@@ -106,7 +106,7 @@ A Poseidon permutation behaves like a random permutation. To achieve this, it ap
 
 A round function consists of 3 transformations that modify the state:
 - Ark: the round constants are added to the state.
-- S-box: a substitution box ($S$-$box(x)=x^α$) is applied with α chosen such that $gcd⁡(α,p-1)=1$.
+- S-box: a substitution box (S-$box(x)=x^α$) is applied with α chosen such that $gcd⁡(α,p-1)=1$.
 - Mix: the state is mixed through a multiplication by a $t×t$ [MDS matrix](https://en.wikipedia.org/wiki/MDS_matrix).
 
 In a full round function S-boxes are applied to the full state while a partial round function contains a single S-box. Detailed overviews of both functions are given in [Fig4](#figure-5-partial-round-overview) and [Fig5](#figure-5-partial-round-overview).
