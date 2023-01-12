@@ -90,6 +90,8 @@ To squeeze elements out, the sponge returns all or a part of its state and appli
   <img src="docs/images/rm-poseidon-fig-2.svg">
 </div>
 
+>Note that although our implementation allows to mix absorption and squeezing phases, hash functions work by absorbing all the message first, and then squeezing once to get the message hash (see [Fig1](#figure-1-global-overview-of-a-poseidon-hash)). 
+
 ### Poseidon Permutation 
 
 A Poseidon permutation behaves like a random permutation. To achieve this, it applies many rounds of simpler permutations. Rounds come in 2 flavours: the more secure full rounds and the more efficient partial rounds (see [Fig3](#figure-3-poseidon-permutation)).
@@ -104,7 +106,7 @@ A Poseidon permutation behaves like a random permutation. To achieve this, it ap
 
 A round function consists of 3 transformations that modify the state:
 - Ark: the round constants are added to the state.
-- S-box: a substitution box $(S-box(x)=x^α)$ is applied with α chosen such that $gcd⁡(α,p-1)=1$.
+- S-box: a substitution box ($S$-$box(x)=x^α$) is applied with α chosen such that $gcd⁡(α,p-1)=1$.
 - Mix: the state is mixed through a multiplication by a $t×t$ [MDS matrix](https://en.wikipedia.org/wiki/MDS_matrix).
 
 In a full round function S-boxes are applied to the full state while a partial round function contains a single S-box. Detailed overviews of both functions are given in [Fig4](#figure-5-partial-round-overview) and [Fig5](#figure-5-partial-round-overview).
